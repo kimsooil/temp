@@ -1,0 +1,11 @@
+import subprocess
+
+@app.route('/export_user_data_to_json', methods=['GET'])
+def export_user_data_to_json():
+    timestamp = datetime.datetime.now().strftime("%Y-%m-%d-%H-%M-%S.%f")
+    out_filename="aml_m_userdata_"+timestamp+".json"
+    cmd = "/usr/bin/mongoexport --db=mp --collection=aml_all5 --type=json --query='{task_id:/aml-m-[0-9]{12}/}' --out=static/"+out_filename
+    subprocess.call(cmd, shell=True)
+    response= jsonify({'result':'ok', 'out_filename':out_filename})
+    #response.headers.add('Access-Control-Allow-Origin', '*')
+    return response    
