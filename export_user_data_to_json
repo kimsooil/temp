@@ -1,11 +1,47 @@
-import subprocess
 
 @app.route('/export_user_data_to_json', methods=['GET'])
 def export_user_data_to_json():
     timestamp = datetime.datetime.now().strftime("%Y-%m-%d-%H-%M-%S.%f")
     out_filename="aml_m_userdata_"+timestamp+".json"
     cmd = "/usr/bin/mongoexport --db=mp --collection=aml_all5 --type=json --query='{task_id:/aml-m-[0-9]{12}/}' --out=static/"+out_filename
-    subprocess.call(cmd, shell=True)
-    response= jsonify({'result':'ok', 'out_filename':out_filename})
-    #response.headers.add('Access-Control-Allow-Origin', '*')
+    #subprocess.call(cmd, shell=True)
+    try:
+        msg=subprocess.check_output(cmd, stderr=subprocess.STDOUT, shell=True).decode()
+    except subprocess.CalledProcessError as e:
+        msg=e.output.decode()
+    response= jsonify({'result':'ok', 'out_filename':out_filename, 'message':msg})
     return response    
+
+@app.route('/import_user_data_as_json', methods=['GET'])
+def import_user_data_as_json():
+    filename = request.args.get('filename')
+    cmd = "/usr/bin/mongoimport --db=mp --collection=aml_all5 --type=json --file=static/"+filename
+    #subprocess.call(cmd, shell=True)
+    try:
+        msg=subprocess.check_output(cmd, stderr=subprocess.STDOUT, shell=True).decode()
+    except subprocess.CalledProcessError as e:
+        msg=e.output.decode()
+    response= jsonify({'result':'ok', 'in_filename':filename, 'message':msg})
+    return response    
+
+@app.route('/copying_jsonfile_after_upload/<string:filename>/', methods=['GET'])
+#@app.cache.cached(timeout=0)
+def copying_jsonfile_after_upload(filename='test.json'):
+
+    result={}
+
+    if filename is not None:
+        try:
+            url="http://127.0.0.1/uploadedfiles/"+filename
+            json_found=urlopen(url).read().decode('utf-8')
+            f = open("static/"+filename, "w")
+            f.write(json_found)
+            f.close()
+            path="static/"+filename
+            
+        except FileNotFoundError:
+            return jsonify({"error":"File not found"})
+
+        if json_found:
+            result={"filename":filename}
+    return jsonify(result)
