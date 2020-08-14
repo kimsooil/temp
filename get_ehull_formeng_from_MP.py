@@ -56,13 +56,22 @@ def get_cif_from_xml(filename='test.cif'):
             e_final = out_read.final_energy
             n_site = out_read.final_structure.num_sites
 
-            E_hull, E_form=get_e_hull_and_formation_energy_from_MP(out_read)
+            E_hull=-1000.0
+            E_form=-1000.0
+            capacity=0.0
+            try:
+                E_hull, E_form=get_e_hull_and_formation_energy_from_MP(out_read)
+            except:
+                pass
             #E_hull = mpr.get_stability([entry4E_hull])[0]['e_above_hull']
 
             compounds_found_list=""
             formula = out_read.final_structure.formula
-            sorted_formula=sorted(formula.split())
-            alphabetical_formula=' '.join(sorted_formula)
+            comp=Composition(formula)
+            anonymized_formula=comp.anonymized_formula
+            #sorted_formula=sorted(formula.split())
+            #alphabetical_formula=' '.join(sorted_formula)
+            alphabetical_formula=comp.alphabetical_formula
             mq={"alphabetical_formula":alphabetical_formula}
             md= (myclient["mp"])["aml_all5"].find(mq)
 
