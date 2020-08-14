@@ -80,8 +80,9 @@ def get_cif_from_xml(filename='test.cif'):
 
         if cif_found:
             result={"cif_file":(filename+'.cif'), "cif_str":cif_str, "spg_num":s_group_num, "spg_sym":s_group_sbl, "crystal_sys":crystal_sys, 
-                    "formula":formula, "alphabetical_formula":alphabetical_formula, "compounds_list":compounds_found_list,
-                    "natoms":n_atom, "nsites":n_site, "band_gap":band_gap, "e_final":e_final, "volume":volume, "density":density,
+                    "formula":formula, "alphabetical_formula":alphabetical_formula, 
+                    "compounds_list":compounds_found_list, "anonymized_formula":anonymized_formula,
+                    "natoms":n_atom, "nsites":n_site, "band_gap":band_gap, "e_final":e_final, "volume":volume, "density":density, "capacity":capacity,
                     "E_hull":E_hull, "E_form":E_form}
     return jsonify(result)
 
@@ -110,6 +111,7 @@ def inserting_new_to_aml_m():
         new_material['task_id']="aml-m-"+time_stamp2
         new_material['pretty_formula']=data['formula'].replace(" ", "")
         new_material['alphabetical_formula']=data['alphabetical_formula']
+        new_material['anonymized_formula']=data['anonymized_formula']
         new_material['ntypes']=len(data['alphabetical_formula'].split())
         new_material['cif']=cif_str
         new_material['spacegroup']={"number":data['spg_num'], "symbol":data['spg_sym'], "crystal_system":data['crystal_sys']}
@@ -118,6 +120,7 @@ def inserting_new_to_aml_m():
         new_material['band_gap']=float(data['band_gap'])
         new_material['volume']=float(data['volume'])
         new_material['density']=float(data['density'])
+        new_material['capacity']=float(data['capacity'])
 
         # don't know how to get it for now. but need initializing to avoid error later
         new_material['e_above_hull']=float(data['e_above_hull'])
