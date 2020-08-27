@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SRA AML-Reports</title>
+
+<!-- for development (remote)-->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+<!-- for aws deployment
+<link rel="stylesheet" href="http://13.56.22.165:8000/static/css/bootstrap.css">
+<script src="http://13.56.22.165:8000/static/vendors/jquery/dist/jquery.js"></script>
+<script src="http://13.56.22.165:8000/static/js/bootstrap.js"></script>
+ --><!--- for samsung server developement -->
+<!--
+<link rel="stylesheet" href="http://105.165.107.11:8080/static/css/bootstrap.css">
+<script src="http://105.165.107.11:8080/static/vendors/jquery/dist/jquery.js"></script>
+<script src="http://105.165.107.11:8080/static/js/bootstrap.js"></script>
+-->
+<style type="text/css">
+table {
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+}
+
+td, th {
+    border: 1px solid #dddddd;
+    text-align: left;
+    padding: 8px;
+}
+
+tr:nth-child(even) {
+    background-color: #dddddd;
+}
+
+
+.bs-example{
+	margin: 20px;
+}
+.td_icon{
+	width: 10%;
+}
+.td_prj_title{
+	width: 30%;
+}
+.td_prj_desc{
+	width: 60%;
+}
+
+</style>
+<script>
+/**
+ * detect IE
+ * returns version of IE or false, if browser is not Internet Explorer
+ */
+function detectIE() {
+  var ua = window.navigator.userAgent;
+
+  // Test values; Uncomment to check result …
+
+  // IE 10
+  // ua = 'Mozilla/5.0 (compatible; MSIE 10.0; Windows NT 6.2; Trident/6.0)';
+  
+  // IE 11
+  // ua = 'Mozilla/5.0 (Windows NT 6.3; Trident/7.0; rv:11.0) like Gecko';
+  
+  // Edge 12 (Spartan)
+  // ua = 'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.71 Safari/537.36 Edge/12.0';
+  
+  // Edge 13
+  // ua = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/46.0.2486.0 Safari/537.36 Edge/13.10586';
+
+  var msie = ua.indexOf('MSIE ');
+  if (msie > 0) {
+    // IE 10 or older => return version number
+    return parseInt(ua.substring(msie + 5, ua.indexOf('.', msie)), 10);
+  }
+
+  var trident = ua.indexOf('Trident/');
+  if (trident > 0) {
+    // IE 11 => return version number
+    var rv = ua.indexOf('rv:');
+    return parseInt(ua.substring(rv + 3, ua.indexOf('.', rv)), 10);
+  }
+
+  var edge = ua.indexOf('Edge/');
+  if (edge > 0) {
+    // Edge (IE 12+) => return version number
+    return parseInt(ua.substring(edge + 5, ua.indexOf('.', edge)), 10);
+  }
+
+  // other browser
+  return false;
+}
+function getRequests() {
+    var s1 = location.search.substring(1, location.search.length).split('&'),
+        r = {}, s2, i;
+    for (i = 0; i < s1.length; i += 1) {
+        s2 = s1[i].split('=');
+        r[decodeURIComponent(s2[0]).toLowerCase()] = decodeURIComponent(s2[1]);
+    }
+    return r;
+};
+
+var QueryString = getRequests();
+console.log(QueryString['ctime']);
+</script>
+</head>
+<body>
+<div class="bs-example">
+    <div class="panel-group" id="accordion">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4 class="panel-title">
+                    <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne">
+						<h3><span class="label label-primary">AML Reports</span></h3>
+					</a>
+                </h4>
+            </div>
+            -<div id="collapseOne" class="panel-collapse collapse in">
+
+                <div class="panel-body">
+                    <p>
+					
+<!--------- edit this part below (begin) ------------------------->
+<table>
+  <tr>
+    <th>Download</th>
+    <th>Project name</th>
+    <th>Description</th>
+  </tr>
+  <tr>
+    <td class="td_icon">
+	<a target="_blank" href="/static/report-files/test.pdf" download> <!-- edit url -->
+			<span class="glyphicon glyphicon-download-alt"></span>
+			<span class="download_link_for_ie"></span>
+		</a>&nbsp;
+	<a target="_blank" href="/static/pdf.js/web/viewer.html?file=/static/report-files/test.pdf">
+			<span class="glyphicon glyphicon-open"></span>
+			<span class="open_link_for_ie"></span>
+	</a>
+	</td>
+    <td class="td_prj_title">Project 1</td> <!--- edit project name -->
+    <td class="td_prj_desc">test</td> <!-- edit project description -->
+  </tr>
+  <tr>
+    <td>
+		<a target="_blank" href="/static/report-files/test.pdf" download> <!-- edit url -->
+			<span class="glyphicon glyphicon-download-alt"></span>
+			<span class="download_link_for_ie"></span>
+		</a>&nbsp;
+	<a target="_blank" href="/static/pdf.js/web/viewer.html?file=/static/report-files/test.pdf">
+			<span class="glyphicon glyphicon-open"></span>
+			<span class="open_link_for_ie"></span>
+	</a>
+
+	</td>
+    <td>Project 2</td>
+    <td>test</td>
+  </tr>
+  <tr>
+    <td>
+		<a target="_blank" href="/static/report-files/test.pdf" download> <!-- edit url -->
+			<span class="glyphicon glyphicon-download-alt"></span>
+			<span class="download_link_for_ie"></span>
+		</a>&nbsp;
+	<a target="_blank" href="/static/pdf.js/web/viewer.html?file=/static/report-files/test.pdf">
+			<span class="glyphicon glyphicon-open"></span>
+			<span class="open_link_for_ie"></span>
+	</a>
+
+	</td>
+    <td>Project 3</td>
+    <td>test</td>
+  </tr>
+  <tr>
+    <td>
+		<a target="_blank" href="/static/report-files/test.pdf" download> <!-- edit url -->
+			<span class="glyphicon glyphicon-download-alt"></span>
+			<span class="download_link_for_ie"></span>
+		</a>&nbsp;
+	<a target="_blank" href="/static/pdf.js/web/viewer.html?file=/static/report-files/test.pdf">
+			<span class="glyphicon glyphicon-open"></span>
+			<span class="open_link_for_ie"></span>
+	</a>
+
+	</td>
+    <td>Project 4</td>
+    <td>test</td>
+  </tr>
+</table>
+<!--------- edit this part above (end) ------------------------->
+					</p>
+                </div>
+            </div>
+        </div>
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4 class="panel-title">
+                    <a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo">
+						<h3><span class="label label-info">Next Generation Batteries</span></h3>
+					</a>
+                </h4>
+            </div>
+            <div id="collapseTwo" class="panel-collapse collapse in">
+                <div class="panel-body">
+                    <p>
+                      <table>
+                        <tr>
+                          <th>Download</th>
+                          <th>Project name</th>
+                          <th>Description</th>
+                        </tr>
+                        <tr>
+                          <td class="td_icon">
+                        <a target="_blank" href="/static/report-files/test.pdf" download> <!-- edit url -->
+                            <span class="glyphicon glyphicon-download-alt"></span>
+                            <span class="download_link_for_ie"></span>
+                          </a>&nbsp;
+                        <a target="_blank" href="/static/pdf.js/web/viewer.html?file=/static/report-files/test.pdf">
+                            <span class="glyphicon glyphicon-open"></span>
+                            <span class="open_link_for_ie"></span>
+                        </a>
+                        </td>
+                          <td class="td_prj_title">Project 1</td> <!--- edit project name -->
+                          <td class="td_prj_desc">test</td> <!-- edit project description -->
+                        </tr>
+                        <tr>
+                          <td>
+                          <a target="_blank" href="/static/report-files/test.pdf" download> <!-- edit url -->
+                            <span class="glyphicon glyphicon-download-alt"></span>
+                            <span class="download_link_for_ie"></span>
+                          </a>&nbsp;
+                        <a target="_blank" href="/static/pdf.js/web/viewer.html?file=/static/report-files/test.pdf">
+                            <span class="glyphicon glyphicon-open"></span>
+                            <span class="open_link_for_ie"></span>
+                        </a>
+                      
+                        </td>
+                          <td>Project 2</td>
+                          <td>test</td>
+                        </tr>
+                        <tr>
+                          <td>
+                          <a target="_blank" href="/static/report-files/test.pdf" download> <!-- edit url -->
+                            <span class="glyphicon glyphicon-download-alt"></span>
+                            <span class="download_link_for_ie"></span>
+                          </a>&nbsp;
+                        <a target="_blank" href="/static/pdf.js/web/viewer.html?file=/static/report-files/test.pdf">
+                            <span class="glyphicon glyphicon-open"></span>
+                            <span class="open_link_for_ie"></span>
+                        </a>
+                      
+                        </td>
+                          <td>Project 3</td>
+                          <td>test</td>
+                        </tr>
+                        <tr>
+                          <td>
+                          <a target="_blank" href="/static/report-files/test.pdf" download> <!-- edit url -->
+                            <span class="glyphicon glyphicon-download-alt"></span>
+                            <span class="download_link_for_ie"></span>
+                          </a>&nbsp;
+                        <a target="_blank" href="/static/pdf.js/web/viewer.html?file=/static/report-files/test.pdf">
+                            <span class="glyphicon glyphicon-open"></span>
+                            <span class="open_link_for_ie"></span>
+                        </a>
+                      
+                        </td>
+                          <td>Project 4</td>
+                          <td>test</td>
+                        </tr>
+                      </table>                      
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+	<p><strong>Note:</strong> Click titles to expand/collapse.</p>
+</div>
+</body>
+
+<script>
+$(document).ready(function(){
+// Get IE or Edge browser version
+var version = detectIE();
+
+if (version) {
+  $('.download_link_for_ie').text('Download');
+  $('.open_link_for_ie').text('Open');
+}
+});
+</script>
+</html>       
