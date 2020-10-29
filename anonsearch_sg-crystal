@@ -38,19 +38,19 @@ def anonsearch(anonformula='ABCD4'):
                 mq= {"anonymized_formula":anonformula, "ntypes":ntypes_in_anonformula, "$and":alpha_pattern}
             else:
                 mq= {"anonymized_formula":anonformula, "$and":alpha_pattern}
+
+            if sg_sym is not None and sg_sym!='':
+                alpha_pattern.append({"spacegroup.symbol":sg_sym})
+            if sg_num is not None and sg_num!='':
+                alpha_pattern.append({"spacegroup.number":int(sg_num)})
+            if crystal_system is not None and crystal_system!='':
+                alpha_pattern.append({"spacegroup.crystal_system":crystal_system})
         else: # wildcard(*) in anonymized_formula
             elements=include.split(',')
             elements.sort()
             for element in elements:
                 alpha_pattern.append({"alphabetical_formula":{"$regex":element+"[0-9]+"}})
             mq= {"ntypes":ntypes_in_anonformula, "$and":alpha_pattern}
-
-        if sg_sym is not None and sg_sym!='':
-            alpha_pattern.append({"spacegroup.symbol":sg_sym})
-        if sg_num is not None and sg_num!='':
-            alpha_pattern.append({"spacegroup.number":int(sg_num)})
-        if crystal_system is not None and crystal_system!='':
-            alpha_pattern.append({"spacegroup.crystal_system":crystal_system})
 
         md= (myclient["mp"])["aml_all5"].find(mq)
 
