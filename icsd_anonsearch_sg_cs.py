@@ -11,6 +11,13 @@ def icsd_anonsearch(anonformula='ABCD4'):
     output_entries=[]
 
     alpha_pattern=[]
+    if sg_sym is not None and sg_sym!='' and sg_sym!='null':
+        alpha_pattern.append({"spacegroup_short":sg_sym})
+    if sg_num is not None and sg_num!='' and sg_num!='null':
+        alpha_pattern.append({"sym_num":int(sg_num)})
+    if crystal_system is not None and crystal_system!='' and crystal_system!='null':
+        crystal_system = crystal_system.capitalize()
+        alpha_pattern.append({"crystal_system":crystal_system})
     if exclude:
         ex_elements=exclude.split(',')
         for ex_ele in ex_elements:
@@ -38,13 +45,6 @@ def icsd_anonsearch(anonformula='ABCD4'):
             else:
                 mq= {"anonymized_formula":anonformula, "$and":alpha_pattern}
 
-            if sg_sym is not None and sg_sym!='' and sg_sym!='null':
-                alpha_pattern.append({"spacegroup_short":sg_sym})
-            if sg_num is not None and sg_num!='' and sg_num!='null':
-                alpha_pattern.append({"sym_num":int(sg_num)})
-            if crystal_system is not None and crystal_system!='' and crystal_system!='null':
-                crystal_system = crystal_system.capitalize()
-                alpha_pattern.append({"crystal_system":crystal_system})
         else: # wildcard(*) in anonymized_formula
             elements=include.split(',')
             elements.sort()
