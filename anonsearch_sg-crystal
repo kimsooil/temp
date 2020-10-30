@@ -39,11 +39,11 @@ def anonsearch(anonformula='ABCD4'):
             else:
                 mq= {"anonymized_formula":anonformula, "$and":alpha_pattern}
 
-            if sg_sym is not None and sg_sym!='':
+            if sg_sym is not None and sg_sym!='' and sg_sym!='null':
                 alpha_pattern.append({"spacegroup.symbol":sg_sym})
-            if sg_num is not None and sg_num!='':
+            if sg_num is not None and sg_num!='' and sg_num!='null':
                 alpha_pattern.append({"spacegroup.number":int(sg_num)})
-            if crystal_system is not None and crystal_system!='':
+            if crystal_system is not None and crystal_system!='' and crystal_system!='null':
                 alpha_pattern.append({"spacegroup.crystal_system":crystal_system})
         else: # wildcard(*) in anonymized_formula
             elements=include.split(',')
