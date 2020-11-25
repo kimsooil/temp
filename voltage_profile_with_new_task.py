@@ -21,7 +21,7 @@ def task_info(taskid='aml-m-1222978'):
     result['evolution']=evolution
     return jsonify(result)
     
-    def get_voltage_profile(composition="LiCoO2", chargeElement="Li"):
+def get_voltage_profile(composition="LiCoO2", chargeElement="Li"):
     unique_entries={}
     entries = []
     composition=re.sub(r'\W+', '', composition)
