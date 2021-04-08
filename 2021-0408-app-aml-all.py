@@ -40,7 +40,7 @@ def task_info(taskid='aml-m-1222978'):
 
     return jsonify(result)
   
-  @app.route('/icsd_element/<string:composition>/', methods=['GET'])
+@app.route('/icsd_element/<string:composition>/', methods=['GET'])
 #@app.cache.cached(timeout=0)
 def icsd_element(composition='Li-La-Zr-O'):
     result={}
